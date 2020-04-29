@@ -1,6 +1,7 @@
 package com.example.recycleex
 
 import android.os.Bundle
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,18 +11,18 @@ class MainActivity : AppCompatActivity() {
         private var count: Int = 0
 
     private val adapter: Adapter = Adapter(this)
+    private val items: MutableList<User> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         rv1.adapter = adapter
         rv1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL , false)
-        count+=1
-        fillData()
+        fillData(0,1)
 
     }
-        private fun fillData(){
-                val items: MutableList<User> = mutableListOf()
-                for (i in 0 until 1){
+        private fun fillData(size: Int, count: Int){
+                for (i in size until count+size){
                     val item : User = User()
                     item.name = "User"
                     item.surname = "User's ID : ${i+1}"
@@ -29,19 +30,12 @@ class MainActivity : AppCompatActivity() {
                 }
             adapter.setData(items)
         }
-    fun itemClicker(user: User){
-            val a = user.num
-            count+=a
+    fun itemClicker(size: Int, position: Int){
+        fillData(size, position+1)
 
-            val items: MutableList<User> = mutableListOf()
-            for (i in 0 until count){
-                val item: User = User()
-                item.name = "User"
-                item.num +=i
-                item.surname = "User's ID : ${i+1}"
-                items.add(item)
-            }
-        adapter.setData(items)
-        Toast.makeText(this, "Was added : ${user.num} \n Count of users : $count", Toast.LENGTH_SHORT).show()
+        }
+    fun menuClicker(){
+        val optionmenu = PopupMenu(this,)
+
     }
 }

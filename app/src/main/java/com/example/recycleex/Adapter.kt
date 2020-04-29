@@ -24,6 +24,6 @@ class Adapter(private val activity: MainActivity): RecyclerView.Adapter<ViewHold
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.populateModel(item[position], activity  )
+        holder.populateModel(item[position],itemCount, position, activity  )
     }
 }
