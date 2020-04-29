@@ -1,6 +1,7 @@
 package com.example.recycleex
 
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 class Adapter(private val activity: MainActivity): RecyclerView.Adapter<ViewHolder>() {
 
     var item : List<User> = listOf()
+    fun deleteItem(position: Int){
+
+    }
 
     fun setData(data: List<User>){
         item = data
@@ -25,5 +29,6 @@ class Adapter(private val activity: MainActivity): RecyclerView.Adapter<ViewHold
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.populateModel(item[position], activity  )
+
     }
 }

@@ -1,6 +1,8 @@
 package com.example.recycleex
 
 import android.os.Bundle
+import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,4 +46,24 @@ class MainActivity : AppCompatActivity() {
         adapter.setData(items)
         Toast.makeText(this, "Was added : ${user.num} \n Count of users : $count", Toast.LENGTH_SHORT).show()
     }
+    fun optionMenu(view : View){
+        val menuOption = PopupMenu(this, view)
+        val menuInflater = menuOption.menuInflater
+        menuInflater.inflate(R.menu.menu_options_top, menuOption.menu)
+        menuOption.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.itemAdd -> {
+
+                }
+                R.id.itemDelete -> {
+
+                }
+            }
+            return@setOnMenuItemClickListener true
+        }
+        menuOption.show()
+
+
+    }
+
 }
