@@ -16,6 +16,8 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.setOnClickListener {
             activity1.itemClicker(size, position)
         }
-
+        itemView.ivMenu.setOnClickListener {
+            activity1.menuClicker(itemView.ivMenu)
+        }
     }
 }

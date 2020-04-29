@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 class Adapter(private val activity: MainActivity): RecyclerView.Adapter<ViewHolder>() {
 
-    var item : List<User> = listOf()
+    var item : ArrayList<User> = arrayListOf()
 
     fun setData(data: List<User>){
-        item = data
+        item = data as ArrayList<User>
         notifyDataSetChanged()
     }
 
@@ -25,5 +25,11 @@ class Adapter(private val activity: MainActivity): RecyclerView.Adapter<ViewHold
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.populateModel(item[position],itemCount, position, activity  )
+    }
+
+    fun removeAt(position: Int){
+        item.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeRemoved(position, item.size)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.recycleex
 
 import android.os.Bundle
+import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-        private var count: Int = 0
 
+    private var count: Int = 0
     private val adapter: Adapter = Adapter(this)
     private val items: MutableList<User> = mutableListOf()
 
@@ -32,10 +33,17 @@ class MainActivity : AppCompatActivity() {
         }
     fun itemClicker(size: Int, position: Int){
         fillData(size, position+1)
-
+        Toast.makeText(this, "added: ${position+1} \n count : ${size+position+1}  ", Toast.LENGTH_SHORT).show()
         }
-    fun menuClicker(){
-        val optionmenu = PopupMenu(this,)
+    fun menuClicker(view: View){
+        val optionMenu = PopupMenu(this, view)
+        val menuInflater = optionMenu.menuInflater
+        menuInflater.inflate(R.menu.menu_option, optionMenu.menu)
+        optionMenu.setOnMenuItemClickListener {
 
+
+            return@setOnMenuItemClickListener true
+        }
+        optionMenu.show()
     }
 }
