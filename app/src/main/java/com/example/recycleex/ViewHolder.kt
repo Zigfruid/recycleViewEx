@@ -10,14 +10,14 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
  private   val tvSurname: TextView = itemView.tv2
 
 
-    fun populateModel(user: User, size: Int, position: Int, activity1: MainActivity) {
-        tvName.text = user.name
-        tvSurname.text = user.surname
-        itemView.setOnClickListener {
-            activity1.itemClicker(size, position)
-        }
+    fun populateModel(user: User, size: Int,  position: Int, activity: MainActivity){
+            tvName.text = user.name
+            tvSurname.text = user.surname
+            itemView.setOnClickListener {
+                activity.itemClicker(size,position)
+            }
         itemView.ivMenu.setOnClickListener {
-            activity1.menuClicker(itemView.ivMenu)
+            activity.menuClicker(itemView.ivMenu, size, position)
         }
     }
 }
