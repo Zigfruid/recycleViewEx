@@ -1,19 +1,32 @@
 package com.example.recycleex
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item.*
 
 class MainActivity : AppCompatActivity() {
 
     private var counter: Int = 0
     private val adapter: Adapter = Adapter(this)
     private val items: MutableList<User> = mutableListOf()
+
+    override fun onBackPressed() {
+
+        val dialog = AlertDialog.Builder(this)
+        dialog.setMessage(" Do you want exit?")
+        dialog.setCancelable(false)
+        dialog.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+            finish()
+        }
+        dialog.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int -> }
+        dialog.show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +52,39 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "added: ${position+1} \n count : ${size+position+1}  ", Toast.LENGTH_SHORT).show()
         }
     fun removeAt(position: Int, size: Int)  {
-            items.removeAt(position)
+
+        items.removeAt(position)
         adapter.notifyItemRemoved(position)
         adapter.notifyItemRangeChanged(position,size)
 
 
+    }
+        fun dialogAdd(size: Int){
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("Do you want add one more user?")
+            dialog.setMessage("Add one?")
+            dialog.setCancelable(false)
+            dialog.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
+                fillData(size, 1)
+            }
+            dialog.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
+
+            }
+            dialog.show()
+        }
+
+    fun dialogDelete(position: Int, size: Int){
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Do you want delete this user?")
+        dialog.setMessage("Remove it?")
+        dialog.setCancelable(false)
+        dialog.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
+           removeAt(position , size)
+
+        }
+        dialog.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
+        }
+        dialog.show()
     }
 
     fun menuClicker(view: View, size: Int, position: Int){
@@ -53,13 +94,12 @@ class MainActivity : AppCompatActivity() {
         optionMenu.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.itemAdd -> {
-                    fillData(size,1)
+                    dialogAdd(size)
                 }
                 R.id.itemDelete -> {
-                    removeAt(position, size)
+                   dialogDelete(position, size)
                 }
             }
-
             return@setOnMenuItemClickListener true
         }
         optionMenu.show()
