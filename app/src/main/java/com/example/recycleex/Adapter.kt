@@ -7,12 +7,19 @@ import androidx.recyclerview.widget.RecyclerView
 
 class Adapter(private val activity: MainActivity): RecyclerView.Adapter<ViewHolder>() {
 
-    var item : ArrayList<User> = arrayListOf()
+    var item : MutableList<User> = mutableListOf()
 
-    fun setData(data: List<User>){
-        item = data as ArrayList<User>
+    fun setData(data: MutableList<User>){
+        item = data
         notifyDataSetChanged()
     }
+    fun addItem(position: Int, size:Int ){
+        item.add(position, User("User", "User's ID ${item.size+1}"))
+       notifyItemInserted(position)
+        notifyItemRangeChanged(position,size)
+
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)

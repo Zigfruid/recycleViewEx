@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var counter: Int = 0
     private val adapter: Adapter = Adapter(this)
     private val items: MutableList<User> = mutableListOf()
 
@@ -33,11 +32,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         rv1.adapter = adapter
         rv1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL , false)
-        fillData(0, 1)
+        fillData( 1)
 
     }
-        private fun fillData(size: Int, count: Int){
-                for (i in size until count+size){
+        private fun fillData( count: Int){
+                for (i in 0 until count){
                     val item : User = User()
                     item.name = "User"
                     item.surname = "User's ID : ${i+1}"
@@ -46,26 +45,24 @@ class MainActivity : AppCompatActivity() {
             adapter.setData(items)
         }
 
-    fun itemClicker(size: Int, position: Int){
-        fillData(size, position+1)
-        counter = position+1
-        Toast.makeText(this, "added: ${position+1} \n count : ${size+position+1}  ", Toast.LENGTH_SHORT).show()
-        }
+//    fun itemClicker(size: Int, position: Int){
+//        fillData(size, position+1)
+//        Toast.makeText(this, "added: ${position+1} \n count : ${size+position+1}  ", Toast.LENGTH_SHORT).show()
+//        }
     fun removeAt(position: Int, size: Int)  {
-
         items.removeAt(position)
         adapter.notifyItemRemoved(position)
         adapter.notifyItemRangeChanged(position,size)
-
-
     }
-        fun dialogAdd(size: Int){
+
+        fun dialogAdd(position: Int,size:Int){
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("Do you want add one more user?")
             dialog.setMessage("Add one?")
             dialog.setCancelable(false)
             dialog.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
-                fillData(size, 1)
+               adapter.addItem(position+1, size)
+                Toast.makeText(this, " User was added", Toast.LENGTH_SHORT).show()
             }
             dialog.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
 
@@ -80,6 +77,8 @@ class MainActivity : AppCompatActivity() {
         dialog.setCancelable(false)
         dialog.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
            removeAt(position , size)
+            Toast.makeText(this, " User was deleted", Toast.LENGTH_SHORT).show()
+
 
         }
         dialog.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
@@ -94,11 +93,12 @@ class MainActivity : AppCompatActivity() {
         optionMenu.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.itemAdd -> {
-                    dialogAdd(size)
+                    dialogAdd(position, size)
+
                 }
                 R.id.itemDelete -> {
                    dialogDelete(position, size)
-                }
+                    }
             }
             return@setOnMenuItemClickListener true
         }
