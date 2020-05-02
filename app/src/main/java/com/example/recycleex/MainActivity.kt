@@ -49,10 +49,10 @@ class MainActivity : AppCompatActivity() {
 //        fillData(size, position+1)
 //        Toast.makeText(this, "added: ${position+1} \n count : ${size+position+1}  ", Toast.LENGTH_SHORT).show()
 //        }
-    fun removeAt(position: Int, size: Int)  {
+    fun removeAt(position: Int)  {
         items.removeAt(position)
         adapter.notifyItemRemoved(position)
-        adapter.notifyItemRangeChanged(position,size)
+        adapter.notifyItemRangeChanged(position,items.size)
     }
 
         fun dialogAdd(position: Int,size:Int){
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             dialog.setMessage("Add one?")
             dialog.setCancelable(false)
             dialog.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
-               adapter.addItem(position+1, size)
+               adapter.addItem(position+1)
                 Toast.makeText(this, " User was added", Toast.LENGTH_SHORT).show()
             }
             dialog.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         dialog.setMessage("Remove it?")
         dialog.setCancelable(false)
         dialog.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
-           removeAt(position , size)
+           removeAt(position )
             Toast.makeText(this, " User was deleted", Toast.LENGTH_SHORT).show()
 
 

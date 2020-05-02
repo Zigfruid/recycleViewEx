@@ -13,10 +13,10 @@ class Adapter(private val activity: MainActivity): RecyclerView.Adapter<ViewHold
         item = data
         notifyDataSetChanged()
     }
-    fun addItem(position: Int, size:Int ){
+    fun addItem(position: Int ){
         item.add(position, User("User", "User's ID ${item.size+1}"))
        notifyItemInserted(position)
-        notifyItemRangeChanged(position,size)
+        notifyItemRangeChanged(position,item.size)
 
     }
 
